@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}{{ student.name }}{% endblock %}
+{% block content %}
+  <a href="{{ url_for('index') }}" class="back-link">&larr; Back to all students</a>
+  <h1>{{ student.name }}</h1>
+  <p class="subtitle">Student ID: {{ student.student_id }} &middot; Grade: <span class="grade-badge grade-{{ student.grade[0] }}">{{ student.grade }}</span> &middot; Average: {{ student.average }}</p>
+
+  <div class="chart-card">
+    <img src="data:image/png;base64,{{ chart }}" alt="Subject performance chart">
+  </div>
+
+  <h2>Subject vs Class Average</h2>
+  <table class="data-table">
+    <thead><tr><th>Subject</th><th>Student Marks</th><th>Class Average</th><th>Difference</th></tr></thead>
+    <tbody>
+      {% for subj, vals in comparison.items() %}
+      <tr>
+        <td>{{ subj }}</td>
+        <td>{{ vals.student }}</td>
+        <td>{{ vals.class_avg }}</td>
+        <td class="{{ 'positive' if vals.student >= vals.class_avg else 'negative' }}">
+          {{ '%+.1f' | format(vals.student - vals.class_avg) }}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

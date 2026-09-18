@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+  <h1>Class Dashboard</h1>
+
+  <div class="stat-grid">
+    <div class="stat-card"><span class="stat-value">{{ stats.total_students }}</span><span class="stat-label">Total Students</span></div>
+    <div class="stat-card"><span class="stat-value">{{ stats.class_average }}</span><span class="stat-label">Class Average</span></div>
+    <div class="stat-card"><span class="stat-value">{{ stats.pass_rate }}%</span><span class="stat-label">Pass Rate</span></div>
+    <div class="stat-card"><span class="stat-value">{{ stats.highest_average }}</span><span class="stat-label">Highest Average</span></div>
+    <div class="stat-card"><span class="stat-value">{{ stats.lowest_average }}</span><span class="stat-label">Lowest Average</span></div>
+  </div>
+
+  <div class="chart-grid">
+    <div class="chart-card">
+      <h3>Subject-wise Class Average</h3>
+      <img src="data:image/png;base64,{{ subject_chart }}" alt="Subject averages chart">
+    </div>
+    <div class="chart-card">
+      <h3>Grade Distribution</h3>
+      <img src="data:image/png;base64,{{ grade_chart }}" alt="Grade distribution chart">
+    </div>
+  </div>
+
+  <h2>Top 5 Performers</h2>
+  <table class="data-table">
+    <thead><tr><th>Name</th><th>Average</th><th>Grade</th></tr></thead>
+    <tbody>
+      {% for s in top_performers %}
+      <tr><td>{{ s.name }}</td><td>{{ s.average }}</td><td>{{ s.grade }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
